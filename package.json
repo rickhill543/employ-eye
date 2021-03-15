@@ -1,0 +1,27 @@
+{
+  "name": "employ-eye",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rickhill543/employ-eye.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rickhill543/employ-eye/issues"
+  },
+  "homepage": "https://github.com/rickhill543/employ-eye#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.0.0",
+    "mysql2": "^2.2.5"
+  },
+  "devDependencies": {}
+}
