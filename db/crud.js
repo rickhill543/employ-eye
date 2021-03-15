@@ -264,3 +264,83 @@ exports.createRole = function createRoleLoc(mainMenu) {
   })
 });
 };
+
+// function that updates employees and writes them to the database
+exports.updateEmpRole = function updateEmployeeRole(mainMenu) {
+  connection.query('SELECT * FROM employee', function(err, res) {
+    if (err) throw err;
+
+    // empty arrays to destructure database and concatenate strings for better user experience
+    let empFirstName = [];
+    let empLastName = [];
+    let empId = [];
+    let empFullName = [];
+
+    for (i=0; i<res.length;i++) {
+      empFirstName.push(res[i].first_name);
+      empLastName.push(res[i].last_name);
+      empFullName.push(res[i].first_name + ' ' + res[i].last_name);
+      empId.push(res[i].id);
+    }
+
+    // prompts user for update information
+  inquirer.prompt([
+    {
+      type: 'list',
+      message: 'Which employee would you like to update?',
+      name: 'employee',
+      choices: empFullName
+    },
+    {
+      type: 'list',
+      message: 'Which role should be updated?',
+      name: 'role',
+      choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Legal Team lead', 'Lawyer', 'Accountant']
+    }
+  ])
+  .then(function(response) {
+    function updateRoleInner() {
+      console.log('Inserting a new role...\n');
+
+      // isolates input to be used
+      let roleChoice;
+      if (response.role == "Sales Lead") {roleChoice=1}
+      if (response.role == "Salesperson") {roleChoice=2}
+      if (response.role == "Lead Engineer") {roleChoice=3}
+      if (response.role == "Software Engineer") {roleChoice=4}
+      if (response.role == "Legal Team lead") {roleChoice=5}
+      if (response.role == "Lawyer") {roleChoice=6}
+      if (response.role == "Accountant") {roleChoice=7}
+
+      let empChoice;
+      for (i=0; i<empFullName.length; i++) {
+        if(response.employee == empFullName[i]) {
+          empChoice = empId[i];
+        }
+      }
+
+      // update the employee with new role information
+      const query = connection.query(
+        'UPDATE employee SET ? WHERE ?',
+        [
+          {
+            role_id: roleChoice
+          },
+          {
+            id: empChoice
+          }
+        ],
+        function(err, res) {
+          if (err) throw err;
+          console.log(res.affectedRows + ' employee updated!\n');
+          mainMenu();
+        }
+      );
+    }
+    updateRoleInner();
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+});
+};
