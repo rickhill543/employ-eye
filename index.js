@@ -67,6 +67,9 @@ function mainMenu() {
         if (input.choice == "READ_EMPLOYEES") {crud.readEmp(mainMenu);}
         if (input.choice == "READ_ROLES") {crud.readRoles(mainMenu);}
         if (input.choice == "READ_DEPARTMENTS") {crud.readDept(mainMenu);}
+        if (input.choice == "CREATE_EMPLOYEE") {crud.createEmp(mainMenu);}
+        if (input.choice == "CREATE_ROLE") {crud.createRole(mainMenu);}
+        if (input.choice == "CREATE_DEPARTMENT") {crud.createDept(mainMenu);}
         if (input.choice == "QUIT") {ending();}
     })
     .catch(function (error) {
